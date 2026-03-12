@@ -29,9 +29,9 @@ POST /api/orders
        ▼
  order-service ──── order.created ────► inventory-service
        │                                       │
-       │◄──── stock.reserved ─────────────────┤  (stock OK → decrement + reserve)
+       │◄──── stock.reserved ──────────────────┤  (stock OK → decrement + reserve)
        │                                       │
-       └◄──── stock.failed ───────────────────┘  (stock KO → publish failure reason)
+       └◄──── stock.failed ────────────────────┘  (stock KO → publish failure reason)
        │
   CONFIRMED / CANCELLED
 ```
