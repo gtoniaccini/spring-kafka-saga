@@ -1,0 +1,81 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1a
+      author: gtoniaccini
+      comment: Create inventory_items table
+      changes:
+        - createTable:
+            tableName: inventory_items
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: product_id
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: available_quantity
+                  type: INT
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 2a
+      author: gtoniaccini
+      comment: Seed initial inventory items
+      changes:
+        - insert:
+            tableName: inventory_items
+            columns:
+              - column:
+                  name: product_id
+                  value: PROD-001
+              - column:
+                  name: available_quantity
+                  valueNumeric: 100
+        - insert:
+            tableName: inventory_items
+            columns:
+              - column:
+                  name: product_id
+                  value: PROD-002
+              - column:
+                  name: available_quantity
+                  valueNumeric: 5
+        - insert:
+            tableName: inventory_items
+            columns:
+              - column:
+                  name: product_id
+                  value: PROD-003
+              - column:
+                  name: available_quantity
+                  valueNumeric: 0
+
+  - changeSet:
+      id: 3a
+      author: gtoniaccini
+      comment: Create processed_order_events table for idempotent Kafka consumer
+      changes:
+        - createTable:
+            tableName: processed_order_events
+            columns:
+              - column:
+                  name: order_id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: processed_at
+                  type: TIMESTAMP
+                  defaultValueComputed: NOW()
+                  constraints:
+                    nullable: false
